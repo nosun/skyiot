@@ -28,12 +28,10 @@
     
     return 
     if sucess  : {
-                    "login_id": "18600364250",
                     "message": 200
                  }
                  
     if fail    :{
-                    "login_id": "18600364250",
                     "message": 404
                 }
 
