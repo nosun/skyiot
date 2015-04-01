@@ -342,7 +342,33 @@
     message: 400：参数错误
              500：服务器错误
 
-       
+###6、发送指令
+
+	App 通过 http post 方式向设备发送指令，控制设备
+
+    url        : cmd
+    methord    : post
+    argument   : device_id  
+				 token        
+				 commandv   {"sn":1,"cmd":"download","data":["pw::1"]}
+				 
+    example    : http://c1.skyware.com.cn/api/cmd
+    
+    return 
+    
+    if sucess  : {
+                    "message": 200
+                 }
+                 
+    if fail    :{
+                    "message": 500 
+                }
+                
+    message: 400:参数错误
+             404:用户和该设备无绑定关系
+             500:连接服务器失败
+             501:发送失败
+
 ##运营相关
 
 ###1、根据app_id 下载最新的app version
