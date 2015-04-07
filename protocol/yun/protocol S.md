@@ -202,7 +202,7 @@
     url        : file
     methord    : post
     argument   : token 
-				 file (file 的字段 name=avatar)
+	        file (file 的字段 name=file)
     example    : http://c1.skyware.com.cn/api/file
     return 
     if sucess  : {
