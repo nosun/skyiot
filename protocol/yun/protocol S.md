@@ -36,6 +36,7 @@
                 }
 
 ###2、用户注册
+
 	用户注册，在短信验证之后，将用户名密码发过来，进行注册，社会化登录不在此。
 
     url        : user
@@ -221,28 +222,52 @@
 
 ##设备管理
 
-###1、扫描并查询设备
-
+###1、查询设备
 	设备在smartlink之前的第一步，是看设备是否在数据库中。
 
     url        : device
     methord    : get
     argument   : 
 				 token	
-				 device 
-    example    : http://c1.skyware.com.cn/api/device/token/device_sn
+				 sn|mac|id 均可以，以键值对形式请求 
+    example    : http://c1.skyware.com.cn/api/device/token/sn/$sn
+                 http://c1.skyware.com.cn/api/device/token/mac/$mac
+                 http://c1.skyware.com.cn/api/device/token/id/$id
     return 
     if sucess  : {
-					"result": json
+                    "result": {
+                        "device_id": "100027",
+                        "device_mac": "ACCF232C6F38",
+                        "device_sn": "999999999",
+                        "device_name": "nosun2",
+                        "product_id": "4",
+                        "device_protocol_ver": "1.0",
+                        "device_wifi_version": "1.0|1.0",
+                        "device_lock": "0",
+                        "device_online": "1",
+                        "add_time": "1428639836",
+                        "update_time": "1428641905",
+                        "device_address": "北京市北京市",
+                        "device_data": {
+                            "pw": "0",
+                            "lc": "0",
+                            "io": "0",
+                            "": "fa0",
+                            "fa": "3",
+                            "tm": "000",
+                            "fi": "59166",
+                            "pm": "5006",
+                            "th": "2626"
+                        }
+                    },
                     "message": 200
-                 }
-                 
+                }
     if fail    :{
                     "message": 404
                 }
                 
     message: 400：参数错误
-			 500：已经绑定过
+			 200：已经绑定过
              404：设备不存在
 
 ###2、获取设备清单
@@ -253,10 +278,63 @@
     example    : http://c1.skyware.com.cn/api/devices/token
     return 
     if sucess  : {
-                    "result": json
+                    "result": [
+                        {
+                            "device_id": "100027",
+                            "device_mac": "ACCF232C6F38",
+                            "device_sn": "999999999",
+                            "device_name": "nosun2",
+                            "product_id": "4",
+                            "device_protocol_ver": "1.0",
+                            "device_wifi_version": "1.0|1.0",
+                            "device_lock": "0",
+                            "device_online": "1",
+                            "add_time": "1428639836",
+                            "update_time": "1428641905",
+                            "device_address": "北京市北京市",
+                            "device_data": {
+                                "pw": "0",
+                                "lc": "0",
+                                "io": "0",
+                                "": "fa0",
+                                "fa": "3",
+                                "tm": "000",
+                                "fi": "59166",
+                                "pm": "5006",
+                                "th": "2626"
+                            }
+                        },
+                        {
+                            "device_id": "100028",
+                            "device_mac": "ACCF232C7D3A",
+                            "device_sn": "1234",
+                            "device_name": "airpal",
+                            "product_id": "1",
+                            "device_protocol_ver": "1.0",
+                            "device_wifi_version": "1.0|1.0",
+                            "device_lock": "1",
+                            "device_online": "1",
+                            "add_time": "1428652781",
+                            "update_time": "1428653569",
+                            "device_address": "北京市北京市",
+                            "device_data": {
+                                "pw": "1",
+                                "lc": "0",
+                                "uv": "0",
+                                "io": "0",
+                                "mo": "0",
+                                "fa": "3",
+                                "tm": "000",
+                                "fi": "58866",
+                                "pm": "0853",
+                                "th": "2626"
+                            },
+                            "area_id": "101010100"
+                        }
+                    ],
                     "message": 200
-                 }
-                 
+                }
+                                 
     if fail    :{
                     "message": 500
                 }
@@ -304,10 +382,9 @@
 ###4、绑定设备
 	建立用户与设备的绑定关系，,目前尚未做设备和用户已经绑定的关系进行判断
 
-
     url        : bind
     methord    : post
-    argument   : $device_id
+    argument   : $device_id || $device_mac
 				 $token 
     example    : http://c1.skyware.com.cn/api/bind
     return 
@@ -320,6 +397,7 @@
                 }
                 
     message: 400：参数错误
+             404:未找到该设备，请重试~
              500：服务器错误    
                 
 ###5、解除绑定
