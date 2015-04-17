@@ -1,8 +1,8 @@
-#物联网云平台API V2.0.0
+## Protocol D: Server & App
 
     Make: nosun
     Date: 2015-02-03
-    ver :  V2.0.0
+    ver : V1.2
     
 ##说明
 
@@ -24,7 +24,7 @@
     url        : login_id
     methord    : get
     argument   : login_id
-    example    : http://c1.skyware.com.cn/api/login_id/18600364250
+    example    :/api/login_id/18600364250
     
     return 
     if sucess  : {
@@ -43,7 +43,7 @@
     methord    : post
     argument   : login_id  手机号码
 				 login_pwd 用户密码
-    example    : http://c1.skyware.com.cn/api/user
+    example    :/api/user
     
     return 
     if sucess  : {
@@ -66,7 +66,7 @@
     methord    : post
     argument   : login_id  手机号码
 				 login_pwd 用户密码
-    example    : http://c1.skyware.com.cn/api/token
+    example    :/api/token
     
     return 
     if sucess  : {
@@ -92,7 +92,7 @@
     url        : user/$token
     methord    : get
     argument   : $token 登录时服务器给返回的token
-    example    : http://c1.skyware.com.cn/api/user/$token
+    example    :/api/user/$token
     
     return 
     if sucess  : 
@@ -101,7 +101,7 @@
 				        {
 				            "login_id": "18600364250",
 				            "user_name": "nosun",
-				            "user_img": "http://c1.skyware.com.cn/uploads/201502/99e521bfc7d2851f0f6cc7f7fcdc85bb.jpg",
+				            "user_img": "http://ccc.cn/uploads/201502/99e521bfc7d2851f0f6cc7f7fcdc85bb.jpg",
 				            "user_email": "nosun@nosun.cn",
 				            "user_phone": "18600364250",
 				            "notice_pm": "1",
@@ -125,15 +125,13 @@
     url        : user/$token
     methord    : put
     argument   : $token 登录时服务器给返回的token
-    example    : http://c1.skyware.com.cn/api/user/$token
+    example    :/api/user/$token
     需要修改的字段 放在put中，目前支持修改的字段如下：
 			user_name
 			user_phone
 			user_email
 			user_img
-			notice_filter
-			notice_pm
-			notice_pm_value
+			user_perfer {json 对象，用来存储用户偏好}
 
     return 
     if sucess  : {
@@ -160,7 +158,7 @@
                  token         [put 参数]
 				 login_pwd_old [put 参数]
 
-    example    : http://c1.skyware.com.cn/api/passwd
+    example    :/api/passwd
     return 
     if sucess  : {
                     "message": 200
@@ -183,7 +181,7 @@
     methord    : post
     argument   : login_pwd  [post 参数]
                  login_id   [post 参数]
-    example    : http://c1.skyware.com.cn/api/passwd
+    example    :/api/passwd
     return 
     if sucess  : {
                     "message": 200
@@ -204,7 +202,7 @@
     methord    : post
     argument   : token 
 	        file (file 的字段 name=file)
-    example    : http://c1.skyware.com.cn/api/file
+    example    :/api/file
     return 
     if sucess  : {
 					"url": the url of the img
@@ -230,9 +228,9 @@
     argument   : 
 				 token	
 				 sn|mac|id 均可以，以键值对形式请求 
-    example    : http://c1.skyware.com.cn/api/device/token/sn/$sn
-                 http://c1.skyware.com.cn/api/device/token/mac/$mac
-                 http://c1.skyware.com.cn/api/device/token/id/$id
+    example    :/api/device/token/sn/$sn
+                /api/device/token/mac/$mac
+                /api/device/token/id/$id
     return 
     if sucess  : {
                     "result": {
@@ -275,7 +273,7 @@
     url        : devices
     methord    : get
     argument   : token [get 参数] 
-    example    : http://c1.skyware.com.cn/api/devices/token
+    example    :/api/devices/token
     return 
     if sucess  : {
                     "result": [
@@ -365,7 +363,7 @@
 				device_address
 				area_id
 
-    example    : http://c1.skyware.com.cn/api/device/device_mac
+    example    :/api/device/device_mac
     return 
     if sucess  : {
 					"result": json  
@@ -386,7 +384,7 @@
     methord    : post
     argument   : $device_id || $device_mac
 				 $token 
-    example    : http://c1.skyware.com.cn/api/bind
+    example    :/api/bind
     return 
     if sucess  : {
                     "message": 200
@@ -407,7 +405,7 @@
     methord    : delete
     argument   : device_id [delete 参数] 1_2_4
 				 token     [delete 参数]
-    example    : http://c1.skyware.com.cn/api/bind/token/device_id
+    example    :/api/bind/token/device_id
     return 
     if sucess  : {
                     "message": 200
@@ -430,7 +428,7 @@
 				 token        
 				 commandv   {"sn":1,"cmd":"download","data":["pw::1"]}
 				 
-    example    : http://c1.skyware.com.cn/api/cmd
+    example    :/api/cmd
     
     return 
     
@@ -447,13 +445,40 @@
              500:连接服务器失败
              501:发送失败
 
+
+## 公共API接口
+
+### 1、天气接口
+	根据获取到的地址信息查询天气和pm，并返回
+
+    url        : wpm
+    methord    : post
+    argument   : $province | 省
+				 $city	   | 市
+				 $district | 区
+
+    {
+        "result": {
+            "temperature": "15",
+            "humidity": "32",
+            "pm": "114"
+        },
+        "message": 200
+    }
+                
+    message: 200：成功
+			 401：天气查询失败
+			 402：pm查询失败
+             404：数据不存在
+             400：参数错误
+
 ##运营相关
 
 ###1、根据app_id 下载最新的app version
     url        : app
     methord    : get
     argument   : app_id [get 参数] 
-    example    : http://c1.skyware.com.cn/api/app
+    example    :/api/app
     return 
     if sucess  : {
                     "result": json
@@ -472,7 +497,7 @@
     url        : company
     methord    : get
     argument   : company_id [get 参数] 
-    example    : http://c1.skyware.com.cn/api/company
+    example    :/api/company
     return 
     if sucess  : {
                     "result": json
