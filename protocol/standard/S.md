@@ -1,4 +1,4 @@
-## Protocol D: Server & App
+## Protocol S: Server & App
 
     Make: nosun
     Date: 2015-02-03
