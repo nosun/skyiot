@@ -1,6 +1,7 @@
 ##  Protocol D: Wifi & Mcu
 
 	Make By: Moore Huang, nosun, wangyf
+	version: 1.3
 
 #####名词&缩写约定
 + sn: (Serial Number)，协议序号，用于匹配请求-应答对  
