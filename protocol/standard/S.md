@@ -511,3 +511,56 @@
     message: 400：参数错误
              404：没有结果 
              
+##  测试相关
+
+### 网速测试
+给客户端提供指定大小的数据包，提供给客户端下载，从而测定网络环境。
+
+    url        : testSpeed
+    methord    : get
+    argument   : (int)num [get 参数] 数据包大小，默认为1k
+    example    :/api/testSpeed
+    return 
+    if sucess  : {
+                    "result": 指定大小的数据包
+                    "message": 200
+                 }
+                
+    加载时间需要客户端来做。
+
+
+### Http码测试
+给客户端提供http错误码，看客户端框架的响应。
+
+    url        : testHttp
+    methord    : get
+    argument   : (int) code [get 参数] http 错误码，比如 200 404…… 
+    example    :/api/testHttp
+    return 
+    if sucess  : {
+                    "result": ok
+                 }
+                 http code
+
+- log上传
+
+    url        : log
+    methord    : post formdata
+    argument   : 
+                 token  
+                 file   log文件
+    require    : fileSize limit: 1024k
+                 fileType limit: *.log
+     
+    example    :/api/log
+
+    return 
+    if sucess  : {
+                    "result": url
+                    "message": 200
+                 }
+                 
+    message: 200：成功上传
+             400：参数错误
+             500：服务器错误    
+             501：未能成功创建文件夹
