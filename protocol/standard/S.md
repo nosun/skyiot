@@ -227,10 +227,12 @@
     methord    : get
     argument   : 
 				 token	
-				 sn|mac|id 均可以，以键值对形式请求 
+				 sn|mac|id|link 均可以，以键值对形式请求 
+				 (P.S.:link为ssid+key的MD5加密串)
     example    :/api/device/token/sn/$sn
                 /api/device/token/mac/$mac
                 /api/device/token/id/$id
+				/api/device/token/link/$link
     return 
     if sucess  : {
                     "result": {
