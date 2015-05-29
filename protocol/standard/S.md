@@ -23,8 +23,8 @@
 
     url        : login_id
     methord    : get
-    argument   : login_id
-    example    :/api/login_id/18600364250
+    argument   : app_id/login_id
+    example    :/api/login_id/1/18600364250
     
     return 
     if sucess  : {
@@ -42,6 +42,7 @@
     url        : user
     methord    : post
     argument   : login_id  手机号码
+                 app_id    app_id
 				 login_pwd 用户密码
     example    :/api/user
     
@@ -65,6 +66,7 @@
     url        : token
     methord    : post
     argument   : login_id  手机号码
+                 app_id    app_id
 				 login_pwd 用户密码
     example    :/api/token
     
@@ -181,6 +183,7 @@
     methord    : post
     argument   : login_pwd  [post 参数]
                  login_id   [post 参数]
+                 app_id     
     example    :/api/passwd
     return 
     if sucess  : {
@@ -268,7 +271,31 @@
 			 200：已经绑定过
              404：设备不存在
 
-###2、获取设备清单
+### 2、验证Sn是否合法
+
+验证 Sn号码是否合法。
+
+    url        : deviceSn
+    methord    : get
+    argument   : pid        
+				 sn   
+				 				 				 
+    example    :/api/deviceSn/1/100
+    
+    return 
+    
+        if sucess  : {
+                        "message": 200
+                     }
+                     
+        if fail    :{
+                        "message": 404 
+                    }
+                    
+        message: 400:参数错误
+                 404:Sn没查到
+                 
+### 3、获取设备清单
 
     url        : devices
     methord    : get
@@ -341,7 +368,7 @@
              404：没有结果
              
 
-###3、更新设备信息
+### 4、更新设备信息
 	设备一经连接云平台，立刻进行登录操作，上报设备的基本信息，此时进行入库操作。
 	用户通过客户端登录后，对设备进行修改，绑定等操作。
 	首次添加某设备，尚无法查出device_id,通过device_mac 对设备信息进行修改。
@@ -377,7 +404,7 @@
              500：服务器错误    
 
 
-###4、绑定设备
+### 5、绑定设备
 	建立用户与设备的绑定关系，,目前尚未做设备和用户已经绑定的关系进行判断
 
     url        : bind
@@ -398,7 +425,7 @@
              404:未找到该设备，请重试~
              500：服务器错误    
                 
-###5、解除绑定
+### 6、解除绑定
 	解除用户与设备的绑定关系,目前尚未做设备和用户已经绑定的关系进行判断
 
     url        : bind
@@ -418,7 +445,7 @@
     message: 400：参数错误
              500：服务器错误
 
-###6、发送指令
+### 7、发送指令
 
 	App 通过 http post 方式向设备发送指令，控制设备
 
@@ -564,3 +591,75 @@
              400：参数错误
              500：服务器错误    
              501：未能成功创建文件夹
+
+## 运营相关
+
+### mac地址上传
+
+通过 App 扫描 Mac 二维码 入库mac。
+
+    url        : deviceMac
+    methord    : post
+    argument   : pid   设备pid  
+				 pass  密码验证      
+				 mac   mac地址
+				 				 
+    example    :/api/mac
+    
+    return 
+    
+        if sucess  : {
+                        "message": 200
+                     }
+                     
+        if fail    :{
+                        "message": 500 
+                    }
+                    
+        message: 400:参数错误
+                 500:插入失败
+                 
+
+### server 服务地址
+
+根据 app_id 返回 server 的地址
+
+    url        : appServer
+    methord    : get
+    argument   : app_id
+				 				 
+    example    :/api/appServer
+    
+    return 
+    
+        if success
+        {
+            "result": {
+                "server_login": "serverip:serverport",
+                "server_api": "serverip:serverport"
+            },
+            "message": 200
+        }
+                     
+        if fail    :{
+                        "message": 404 
+                    }
+                    
+        message: 400:参数错误
+                 404:查询无结果
+                 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
