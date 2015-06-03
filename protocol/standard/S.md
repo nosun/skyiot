@@ -626,11 +626,11 @@
 
 根据 app_id 返回 server 的地址
 
-    url        : appServer
+    url        : appHost
     methord    : get
     argument   : app_id
 				 				 
-    example    :/api/appServer
+    example    :/api/appHost
     
     return 
     
@@ -638,7 +638,8 @@
         {
             "result": {
                 "server_login": "serverip:serverport",
-                "server_api": "serverip:serverport"
+                "server_api": "serverip:serverport",
+                "server_mq": "serverip:serverport"
             },
             "message": 200
         }
