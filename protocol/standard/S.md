@@ -279,7 +279,7 @@
 
     url        : deviceSn
     methord    : get
-    argument   : pid        
+    argument   : app_id        
 				 sn   
 				 				 				 
     example    :/api/deviceSn/1/100
