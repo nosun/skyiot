@@ -274,7 +274,7 @@ header 中有三个必填参数，键名统一用小写；
 
     return
     if sucess  : {
-					 "url": the url of the img
+					 "icon_url": the url of the img
                      "message": 200
                  }
                  
